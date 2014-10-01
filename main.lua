@@ -19,10 +19,20 @@ composer.gotoScene( "scene1" )
 ----------------------------------------------------------------------------------
 local widget = require( "widget" )
 
+local function onTabBar( event )
+	print( event.target.label.text )
+	
+	if event.target.label.text == "List" then 
+		composer.gotoScene("scene1", {effect="slideUp"})
+	elseif event.target.label.text == "two" then 
+		composer.gotoScene("scene4", {effect="slideUp"})
+	end 
+end 
+
 local buttons = {
-	{label="List", size=12},
-	{label="two", size=12},
-	{label="three", size=12}
+	{id="list", label="List", size=12, onPress=onTabBar, selected=true},
+	{id="two", label="two", size=12, onPress=onTabBar},
+	{id="three", label="three", size=12, onPress=onTabBar}
 }
 
 local tabBar = widget.newTabBar({

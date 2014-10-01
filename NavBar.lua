@@ -101,18 +101,17 @@ back = make_bar()
 -------------------------------------
 
 
---------------
+---------------------------------
 local function get_view()
 	return group
 end 
 M.get_view = get_view
-
+---------------------------------
 local function setTitle( str )
 	make_title( str ) 
 end 
 M.setTitle = setTitle
-
---------------------------
+---------------------------------
 
 local function clearRightBarButton()
 	if rightBarButton then 
@@ -135,6 +134,14 @@ local function clearLeftBarButton()
 	end 
 end 
 M.clearLeftBarButton = clearLeftBarButton
+
+---------------------------
+
+local function clearBarButtons()
+	clearRightBarButton()
+	clearLeftBarButton()
+end 
+M.clearBarButtons = clearBarButtons
 
 ---------------------------
 

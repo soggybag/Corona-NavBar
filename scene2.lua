@@ -8,7 +8,7 @@
 
 local composer = require( "composer" )
 local data = require("data")
-local navbar = require("NavBar")
+local navBar = require("NavBar")
 
 -- Load scene with same root filename as this file
 local scene = composer.newScene()
@@ -17,7 +17,7 @@ local scene = composer.newScene()
 
 
 local function make_text( str )
-	local txt = display.newText({text=str, font="Helvetica", size=24})
+	local txt = display.newText({text=str, font="Helvetica", fontSize=24})
 	txt.x = display.contentCenterX
 	scene.view:insert( txt )
 	
@@ -34,6 +34,10 @@ function scene:create( event )
     -- 
     -- INSERT code here to initialize the scene
     -- e.g. add display objects to 'sceneGroup', add touch listeners, etc
+    
+    local back = display.newRect( display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight)
+    back:setFillColor( 44/255, 44/255, 44/255, 1 )
+    scene.view:insert( back )
     
     local index = event.params.index
     local dateCreated = data.getDataAtIndex(index).dateCreated
@@ -65,7 +69,7 @@ function scene:show( event )
         -- INSERT code here to make the scene come alive
         -- e.g. start timers, begin animation, play audio, etc
         
-        navbar.addBackButton()
+        navBar.addBackButton()
         
     end 
 end
@@ -79,6 +83,7 @@ function scene:hide( event )
         --
         -- INSERT code here to pause the scene
         -- e.g. stop timers, stop animation, unload sounds, etc.)
+        navBar.clearBarButtons()
         
     elseif phase == "did" then
         -- Called when the scene is now off screen

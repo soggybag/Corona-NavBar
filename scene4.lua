@@ -43,17 +43,8 @@ function scene:show( event )
         -- Called when the scene is now on screen
         -- Add the back button
          navBar.addBackButton()
-         -- Add Save button
-         navBar.addLeftBarButton( widget.newButton({
-        	label="Save",
-        	width=50,
-        	height=50,
-        	onRelease=function() 
-        		composer.gotoScene("scene1", {effect="slideRight"}) 
-        	end 
-        }) )
         -- Set nav bar title 
-        navBar.setTitle( "New Task" )
+        navBar.setTitle( "Class List" )
     end 
 end
 
@@ -66,7 +57,7 @@ function scene:hide( event )
         --
         -- INSERT code here to pause the scene
         -- e.g. stop timers, stop animation, unload sounds, etc.)
-        navBar.clearBarButtons()
+        clearBarButtons()
         
     elseif phase == "did" then
         -- Called when the scene is now off screen
