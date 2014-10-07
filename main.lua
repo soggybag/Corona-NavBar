@@ -11,7 +11,7 @@ display.setStatusBar( display.HiddenStatusBar )
 local composer = require( "composer" )
 
 -- load scene1
-composer.gotoScene( "scene1" )
+composer.gotoScene( "ViewTasks" )
 
 -- Add any objects that should appear on all scenes below (e.g. tab bar, hud, etc)
 
@@ -22,16 +22,16 @@ local widget = require( "widget" )
 local function onTabBar( event )
 	print( event.target.label.text )
 	
-	if event.target.label.text == "List" then 
-		composer.gotoScene("scene1", {effect="slideUp"})
-	elseif event.target.label.text == "two" then 
-		composer.gotoScene("scene4", {effect="slideUp"})
+	if event.target.label.text == "Tasks" then 
+		composer.gotoScene("ViewTasks", {effect="slideUp"})
+	elseif event.target.label.text == "Classes" then 
+		composer.gotoScene("Classes", {effect="slideUp"})
 	end 
 end 
 
 local buttons = {
-	{id="list", label="List", size=12, onPress=onTabBar, selected=true},
-	{id="two", label="two", size=12, onPress=onTabBar},
+	{id="list", label="Tasks", size=12, onPress=onTabBar, selected=true},
+	{id="two", label="Classes", size=12, onPress=onTabBar},
 	{id="three", label="three", size=12, onPress=onTabBar}
 }
 

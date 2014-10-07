@@ -19,10 +19,17 @@ local scene = composer.newScene()
 
 local tableView
 
+
+----------------------------------------------------
+-- This function draws the contents into each table cell
+-- You need to create each display object, and insert it 
+-- into the table "row" or cell. 
 local function renderRow( event )
-	local row = event.row
-	local index = row.index 
+	local row = event.row	-- Get the row
+	local index = row.index -- Get the index of the row
 	
+	----------------------------------------
+	-- Title text
 	local textLabel = display.newText({
 		text= data.getDataAtIndex(index).assignment,
 		font="Helvetica",
@@ -35,7 +42,8 @@ local function renderRow( event )
 	textLabel.x = 15
 	textLabel.y = 0
 	row:insert( textLabel )
-	
+	-----------------------------------------
+	-- Date text
 	local subtext = display.newText({
 		text = data.getDataAtIndex(index).dateDue,
 		font="Helvetica",
@@ -48,19 +56,43 @@ local function renderRow( event )
 	subtext.x = 15
 	subtext.y = 28
 	row:insert( subtext )
+	------------------------------------------
+	-- Class text
+	local classText = display.newText({
+		text = data.getDataAtIndex(index).class,
+		font="Helvetica",
+		fontSize=14
+	})
+	
+	classText:setFillColor(0.4,0.4,0.4)
+	classText.anchorX = 1
+	classText.anchorY = 0.5
+	classText.x = display.contentWidth - 40
+	classText.y = row.height / 2
+	row:insert( classText )
+	-----------------------------------------
+	-- Arrow
+	local arrow = display.newImageRect( "Line.png", 12, 32 )
+	arrow.x = display.contentWidth - 14
+	arrow.y = row.height / 2
+	row:insert( arrow )
+	
 end
-
-
+------------------------------------------------------------
+-- This function handles touch events on table cells.
 local function touchRow( event )
 	if event.phase == "tap" then 
 		local index = event.row.index 
 		navBar.setTitle( data.getDataAtIndex(index).assignment )
-		composer.gotoScene("scene2", {effect="slideLeft", params={index=index}})
+		composer.gotoScene("TaskDetails", {effect="slideLeft", params={index=index}})
 	end 
 end 
 
 ---------------------------------------------------------------------------------
 
+-- Create all scene display objects when this scene is created. 
+-- You must add all display object to the scene's view with:
+-- scene.view:insert( obj )
 
 function scene:create( event )
     local sceneGroup = self.view
@@ -70,6 +102,7 @@ function scene:create( event )
     -- INSERT code here to initialize the scene
     -- e.g. add display objects to 'sceneGroup', add touch listeners, etc
     
+    -- Create a tableView
     tableView = widget.newTableView({
     	width=display.contentWidth,
     	height=display.contentHeight - 100,
@@ -79,13 +112,24 @@ function scene:create( event )
     	onRowTouch=touchRow
     })
     
+    -- Add the table view to this scene. 
     scene.view:insert( tableView )
     
+    -- Now add some rows to the table view. 
     for i = 1, data.getCount() do 
-    	tableView:insertRow( {rowHeight=50} )
+    	tableView:insertRow( {
+    		-- Set the height of each row. 
+    		rowHeight=50,
+    		-- Set the default and over color for the background of each row. 
+    		rowColor = { default={ 1, 1, 1 }, over={ 1, 0.5, 0, 0.2 } }
+    	} )
     end 
     
 end
+
+--------------------------------------------------------------------------------
+
+-- Show scene
 
 function scene:show( event )
     local sceneGroup = self.view
@@ -100,15 +144,17 @@ function scene:show( event )
         -- INSERT code here to make the scene come alive
         -- e.g. start timers, begin animation, play audio, etc
         
+        -- Set the navbar title
         navBar.setTitle( "Assignments" )
+        -- Clear any buttons on the navbar
         navBar.clearRightBarButton()
-        
+        -- Add a button to the left of the navbar
         navBar.addLeftBarButton( widget.newButton({
         	label="Add",
         	width=50,
         	height=50,
         	onRelease=function() 
-        		composer.gotoScene("scene3", {effect="slideLeft"}) 
+        		composer.gotoScene("AddTask", {effect="slideLeft"}) 
         	end 
         }) )
     end 
@@ -123,6 +169,8 @@ function scene:hide( event )
         --
         -- INSERT code here to pause the scene
         -- e.g. stop timers, stop animation, unload sounds, etc.)
+        
+        -- Clear the button off the navbar
         navBar.clearBarButtons()
         
     elseif phase == "did" then

@@ -1,61 +1,57 @@
----------------------------------------------------------------------------------
---
--- scene.lua
---
----------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- scenetemplate.lua
+--------------------------------------------------------------------------------
 
--- local sceneName = ...
+-- Use this file as a template to create other scenes. It contains all of the 
+-- boiler plate code for creating a scene. 
 
+-- A scene receives a create event when it is created for the first time. 
+-- use the create handler to create all of the objects the scene will display. 
+
+-- A scene receives a show event when it is moving into view. Use this activate 
+-- any systems the scene will use. For example add event listeners to buttons. 
+
+-- A scene receives an exit scene event when it leaves view. Use this event to 
+-- stop any systems the scene may be using when the scene leaves view. 
+
+--------------------------------------------------------------------------------
+
+
+
+-- Import the composer library
 local composer = require( "composer" )
-local navBar = require( "NavBar" )
-local widget = require( "widget" )
-local data = require( "data" )
-
--- Load scene with same root filename as this file
 local scene = composer.newScene()
 
 ---------------------------------------------------------------------------------
 
-local inputName
-local inputClass
 
+-- Called when the scene's view does not exist:
 function scene:create( event )
-    local sceneGroup = self.view
+	local group = self.view
 
-    -- Called when the scene's view does not exist
-    -- 
-    -- INSERT code here to initialize the scene
-    -- e.g. add display objects to 'sceneGroup', add touch listeners, etc
-    
-    -- inputName = display.newTextField()
-    
-    
 end
-----------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------
+
 function scene:show( event )
     local sceneGroup = self.view
     local phase = event.phase
 
     if phase == "will" then
         -- Called when the scene is still off screen and is about to move on screen
-        
+       
+       
     elseif phase == "did" then
         -- Called when the scene is now on screen
-        -- Add the back button
-         navBar.addBackButton()
-         -- Add Save button
-         navBar.addLeftBarButton( widget.newButton({
-        	label="Save",
-        	width=50,
-        	height=50,
-        	onRelease=function() 
-        		composer.gotoScene("scene1", {effect="slideRight"}) 
-        	end 
-        }) )
-        -- Set nav bar title 
-        navBar.setTitle( "New Task" )
+        -- 
+        -- INSERT code here to make the scene come alive
+        -- e.g. start timers, begin animation, play audio, etc
+        
+        
     end 
 end
+
+---------------------------------------------------------------------------------
 
 function scene:hide( event )
     local sceneGroup = self.view
@@ -66,14 +62,16 @@ function scene:hide( event )
         --
         -- INSERT code here to pause the scene
         -- e.g. stop timers, stop animation, unload sounds, etc.)
-        navBar.clearBarButtons()
+        
         
     elseif phase == "did" then
         -- Called when the scene is now off screen
 		
+		
     end 
 end
 
+--------------------------------------------------------------------------------
 
 function scene:destroy( event )
     local sceneGroup = self.view
@@ -83,6 +81,7 @@ function scene:destroy( event )
     -- INSERT code here to cleanup the scene
     -- e.g. remove display objects, remove touch listeners, save state, etc
 end
+
 
 ---------------------------------------------------------------------------------
 

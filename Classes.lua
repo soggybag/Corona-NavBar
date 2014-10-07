@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------
 --
--- scene.lua
+-- Graphs.lua
 --
 ---------------------------------------------------------------------------------
 
@@ -57,7 +57,7 @@ function scene:hide( event )
         --
         -- INSERT code here to pause the scene
         -- e.g. stop timers, stop animation, unload sounds, etc.)
-        clearBarButtons()
+        navBar.clearBarButtons()
         
     elseif phase == "did" then
         -- Called when the scene is now off screen

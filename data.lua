@@ -2,24 +2,36 @@ local M = {}
 --------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------
-local data = {}
+local data 		= {}
+local classes 	= {}
 
 local function HomeworkItem() 
 	local names_array = {"make", "cool", "stuff"}
-
-	homeworkItem = {}
-	homeworkItem.dateCreated = os.time()
-	homeworkItem.dateDue = os.time()
-	homeworkItem.class = "WNM " .. math.random(1,3) .. math.random(0, 6) .. math.random(0,9)
-	local name = names_array[math.random(1, #names_array)] .. " " .. names_array[math.random(1, #names_array)] .. " " .. names_array[math.random(1, #names_array)]
-	homeworkItem.assignment = name
+	
+	homeworkItem 				= {}
+	homeworkItem.dateCreated 	= os.time()
+	homeworkItem.dateDue 		= os.time()
+	homeworkItem.class 			= "WNM " .. math.random(1,3) .. math.random(0, 6) .. math.random(0,9)
+	local name 					= names_array[math.random(1, #names_array)] .. " " .. names_array[math.random(1, #names_array)] .. " " .. names_array[math.random(1, #names_array)]
+	homeworkItem.assignment 	= name
 	
 	return homeworkItem
 end 
 
+
+
+
+
+----------------------------
+-- Make some default items
 for i = 1, 20 do 
 	data[i] = HomeworkItem()
 end 
+
+for i = 1, 5 do 
+	
+end 
+----------------------------
 
 local function getData()
 	return data
