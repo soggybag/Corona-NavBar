@@ -26,13 +26,15 @@ local function onTabBar( event )
 		composer.gotoScene("ViewTasks", {effect="slideUp"})
 	elseif event.target.label.text == "Classes" then 
 		composer.gotoScene("Classes", {effect="slideUp"})
+	elseif event.target.label.text == "Schedule" then 
+		composer.gotoScene("Schedule", {effect="slideUp"})
 	end 
 end 
 
 local buttons = {
 	{id="list", label="Tasks", size=12, onPress=onTabBar, selected=true},
 	{id="two", label="Classes", size=12, onPress=onTabBar},
-	{id="three", label="three", size=12, onPress=onTabBar}
+	{id="three", label="Schedule", size=12, onPress=onTabBar}
 }
 
 local tabBar = widget.newTabBar({

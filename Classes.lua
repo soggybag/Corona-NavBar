@@ -38,13 +38,14 @@ function scene:show( event )
 
     if phase == "will" then
         -- Called when the scene is still off screen and is about to move on screen
+         -- Add the back button
+        navBar.addBackButton()
+        -- Set nav bar title 
+        navBar.setTitle( "Class List" )
         
     elseif phase == "did" then
         -- Called when the scene is now on screen
-        -- Add the back button
-         navBar.addBackButton()
-        -- Set nav bar title 
-        navBar.setTitle( "Class List" )
+       
     end 
 end
 

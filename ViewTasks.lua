@@ -137,13 +137,6 @@ function scene:show( event )
 
     if phase == "will" then
         -- Called when the scene is still off screen and is about to move on screen
-        
-    elseif phase == "did" then
-        -- Called when the scene is now on screen
-        -- 
-        -- INSERT code here to make the scene come alive
-        -- e.g. start timers, begin animation, play audio, etc
-        
         -- Set the navbar title
         navBar.setTitle( "Assignments" )
         -- Clear any buttons on the navbar
@@ -156,7 +149,14 @@ function scene:show( event )
         	onRelease=function() 
         		composer.gotoScene("AddTask", {effect="slideLeft"}) 
         	end 
-        }) )
+        }))
+        
+    elseif phase == "did" then
+        -- Called when the scene is now on screen
+        -- 
+        -- INSERT code here to make the scene come alive
+        -- e.g. start timers, begin animation, play audio, etc
+        
     end 
 end
 
