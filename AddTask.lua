@@ -20,19 +20,49 @@ local scene = composer.newScene()
 
 local inputName
 local inputClass
+local date_picker
 
+
+--[[
+-- Meant to convert date to timestamp
+local function get_date()
+	local date = date_picker:getValues()
+	print( #date, date[1], date[2] )
+	local s = date[2].value .. " " .. date[1].value .. " " .. date[3].value .. " GMT"
+	-- local s="Sat, 29 Oct 1994 19:43:31 GMT"
+	local p="%a+, (%d+) (%a+) (%d+) (%d+):(%d+):(%d+) (%a+)"
+	local day,month,year,hour,min,sec,tz=s:match(p)
+	local MON={Jan=1,Feb=2,Mar=3,Apr=4,May=5,Jun=6,Jul=7,Aug=8,Sep=9,Oct=10,Nov=11,Dec=12}
+	local month=MON[month]
+	-- print(os.time({tz=tz,day=day,month=month,year=year,hour=hour,min=min,sec=sec}))
+end ]]
+
+---------------------------------------------------------------
+
+local function add_new_task() 
+	local date = date_picker:getValues()
+	local dateDue = date[2].value .. " " .. date[1].value .. " " .. date[3].value
+	local name = inputName.text
+
+	data.addNewTask( dateDue, name )
+end
+
+---------------------------------------------------------------
 
 local function on_input_name(event) 
 	
 end
 
+---------------------------------------------------------------
 
 local function make_input( placeholder )
 	local input_group = display.newGroup()
 	local input_back = display.newRect( 0, 0, display.contentWidth - 20, 40 )
 	input_back:setFillColor( 220/255, 220/255, 220/255 )
 	
-	local input_text = native.newTextField( 0, 0, display.contentWidth - 20, 40, on_input_name )
+	local input_text = native.newTextField( 0, 0, display.contentWidth - 20, 40 )
+	input_text:addEventListener( 'userInput', on_input_name )
+	
 	input_text:setTextColor(160/255, 160/255, 160/255 )
 	input_text.size = 17
 	input_text.font = native.newFont("Helvetica", 17)
@@ -52,7 +82,7 @@ local function make_input( placeholder )
 	return input_group
 end 
 
-
+----------------------------------------------------------
 
 local function make_date_picker()
 	-- Create two tables to hold data for days and years      
@@ -75,7 +105,7 @@ local function make_date_picker()
 		-- Months
 		{ 
 			align = "right",
-			width = 140,
+			width = 120,
 			startIndex = 5,
 			labels = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }
 		},
@@ -86,6 +116,20 @@ local function make_date_picker()
 			startIndex = 18,
 			labels = days
 		},
+		--[[ Hour
+		{
+			align = "center",
+			width = 60,
+			startIndex = 6,
+			labels = {1,2,3,4,5,6,7,8,9,10,11,12}
+		},
+		-- AM PM
+		{
+			align = "center",
+			width = 60,
+			startIndex = 1,
+			labels = {"AM","PM"}
+		},]]
 		-- Years
 		{
 			align = "center",
@@ -129,12 +173,12 @@ function scene:create( event )
     
     -- inputName = display.newTextField()
     
-    local input_name = make_input( "name" )
-    input_name.y = 80
-    local input_class = make_input( "class" )
-    input_class.y = 135
+    inputName = make_input( "name" )
+    inputName.y = 80
+    inputClass = make_input( "class" )
+    inputClass.y = 135
     
-    local date_picker = make_date_picker()
+    date_picker = make_date_picker()
 end
 ----------------------------------------------------------------------------------
 function scene:show( event )
@@ -154,6 +198,7 @@ function scene:show( event )
         	width=50,
         	height=50,
         	onRelease=function() 
+        		add_new_task()
         		composer.gotoScene("ViewTasks", {effect="slideRight"}) 
         	end 
         }) )

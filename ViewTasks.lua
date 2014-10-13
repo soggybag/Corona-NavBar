@@ -10,6 +10,7 @@ local composer = require( "composer" )
 local widget = require( "widget" )
 local data = require( "data" )
 local navBar = require( "NavBar" )
+local Text = require("Text")
 
 
 -- Load scene with same root filename as this file
@@ -30,41 +31,20 @@ local function renderRow( event )
 	
 	----------------------------------------
 	-- Title text
-	local textLabel = display.newText({
-		text= data.getDataAtIndex(index).assignment,
-		font="Helvetica",
-		fontSize=20
-	}) 
-	
-	textLabel:setFillColor(0.3,0.3,0.3)
-	textLabel.anchorX = 0
-	textLabel.anchorY = 0
+	local textLabel = Text.headingText( data.getDataAtIndex(index).assignment )
 	textLabel.x = 15
-	textLabel.y = 0
+	textLabel.y = 2
 	row:insert( textLabel )
 	-----------------------------------------
 	-- Date text
-	local subtext = display.newText({
-		text = data.getDataAtIndex(index).dateDue,
-		font="Helvetica",
-		fontSize=14
-	})
-	
-	subtext:setFillColor(0.4,0.4,0.4)
-	subtext.anchorX = 0
-	subtext.anchorY = 0
-	subtext.x = 15
-	subtext.y = 28
-	row:insert( subtext )
+	local date = data.getDataAtIndex(index).dateDue
+	local datetext = Text.subheadText( date )
+	datetext.x = 15
+	datetext.y = 28
+	row:insert( datetext )
 	------------------------------------------
 	-- Class text
-	local classText = display.newText({
-		text = data.getDataAtIndex(index).class,
-		font="Helvetica",
-		fontSize=14
-	})
-	
-	classText:setFillColor(0.4,0.4,0.4)
+	local classText = Text.captionText( data.getDataAtIndex(index).class )
 	classText.anchorX = 1
 	classText.anchorY = 0.5
 	classText.x = display.contentWidth - 40
@@ -73,6 +53,7 @@ local function renderRow( event )
 	-----------------------------------------
 	-- Arrow
 	local arrow = display.newImageRect( "Line.png", 12, 32 )
+	arrow.alpha = 0.5
 	arrow.x = display.contentWidth - 14
 	arrow.y = row.height / 2
 	row:insert( arrow )
@@ -104,6 +85,7 @@ function scene:create( event )
     
     -- Create a tableView
     tableView = widget.newTableView({
+    	hideBackground=true,
     	width=display.contentWidth,
     	height=display.contentHeight - 100,
     	left=0,
@@ -121,7 +103,9 @@ function scene:create( event )
     		-- Set the height of each row. 
     		rowHeight=50,
     		-- Set the default and over color for the background of each row. 
-    		rowColor = { default={ 1, 1, 1 }, over={ 1, 0.5, 0, 0.2 } }
+    		rowColor = { default={ 0.1, 0.12, 0.2 }, over={ 0.0, 0.0, 0.0 } },
+    		-- Set the line color
+    		lineColor = { 0.22, 0.22, 0.3 }
     	} )
     end 
     
@@ -150,6 +134,8 @@ function scene:show( event )
         		composer.gotoScene("AddTask", {effect="slideLeft"}) 
         	end 
         }))
+        
+        tableView:reloadData()
         
     elseif phase == "did" then
         -- Called when the scene is now on screen

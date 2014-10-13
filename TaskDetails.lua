@@ -16,7 +16,7 @@ local scene = composer.newScene()
 ---------------------------------------------------------------------------------
 
 
-local function make_text( str )
+local function make_text( str, font, fontSize )
 	local txt = display.newText({text=str, font="Helvetica", fontSize=24})
 	txt.x = display.contentCenterX
 	scene.view:insert( txt )
@@ -40,8 +40,10 @@ function scene:create( event )
     scene.view:insert( back )
     
     local index = event.params.index
+    
     local dateCreated = data.getDataAtIndex(index).dateCreated
-	local dateDue = data.getDataAtIndex(index).dateDue
+	local dateDue = data.getDataAtIndex(index).dateDue 
+	
 	local class = data.getDataAtIndex(index).class
 	local assignment = data.getDataAtIndex(index).assignment
     
@@ -53,6 +55,9 @@ function scene:create( event )
     
     local date_text = make_text( dateDue )
     date_text.y = 170
+    
+    local created_text = make_text( dateCreated )
+    created_text.y = 210
 	
 end
 
