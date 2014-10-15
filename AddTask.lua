@@ -42,7 +42,7 @@ end ]]
 local function add_new_task() 
 	local date = date_picker:getValues()
 	local dateDue = date[2].value .. " " .. date[1].value .. " " .. date[3].value
-	local name = inputName.text
+	local name = inputName.textField.text
 
 	data.addNewTask( dateDue, name )
 end
@@ -73,6 +73,8 @@ local function make_input( placeholder )
 	
 	input_group:insert( input_back )
 	input_group:insert( input_text )
+	
+	input_group.textField = input_text
 	
 	input_group.x = display.contentCenterX
 	input_group.y = 100

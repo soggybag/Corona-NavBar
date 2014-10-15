@@ -68,7 +68,21 @@ local function touchRow( event )
 		composer.gotoScene("TaskDetails", {effect="slideLeft", params={index=index}})
 	end 
 end 
-
+------------------------------------------------------------
+local function loadTableData()
+	tableView:deleteAllRows()
+	-- Now add some rows to the table view. 
+    for i = 1, data.getCount() do 
+    	tableView:insertRow( {
+    		-- Set the height of each row. 
+    		rowHeight=50,
+    		-- Set the default and over color for the background of each row. 
+    		rowColor = { default={ 0.1, 0.12, 0.2 }, over={ 0.0, 0.0, 0.0 } },
+    		-- Set the line color
+    		lineColor = { 0.22, 0.22, 0.3 }
+    	} )
+    end 
+end 
 ---------------------------------------------------------------------------------
 
 -- Create all scene display objects when this scene is created. 
@@ -97,18 +111,6 @@ function scene:create( event )
     -- Add the table view to this scene. 
     scene.view:insert( tableView )
     
-    -- Now add some rows to the table view. 
-    for i = 1, data.getCount() do 
-    	tableView:insertRow( {
-    		-- Set the height of each row. 
-    		rowHeight=50,
-    		-- Set the default and over color for the background of each row. 
-    		rowColor = { default={ 0.1, 0.12, 0.2 }, over={ 0.0, 0.0, 0.0 } },
-    		-- Set the line color
-    		lineColor = { 0.22, 0.22, 0.3 }
-    	} )
-    end 
-    
 end
 
 --------------------------------------------------------------------------------
@@ -135,7 +137,7 @@ function scene:show( event )
         	end 
         }))
         
-        tableView:reloadData()
+        loadTableData()
         
     elseif phase == "did" then
         -- Called when the scene is now on screen

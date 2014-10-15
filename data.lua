@@ -24,6 +24,8 @@ local function addNewTask( dateDue, name )
 	newTask.dateDue = dateDue
 	newTask.assignment = name
 	data[#data+1] = newTask
+	
+	print( "Added task: ", dateDue, name ) 
 end 
 M.addNewTask = addNewTask
 

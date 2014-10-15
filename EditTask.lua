@@ -194,7 +194,14 @@ function scene:show( event )
     elseif phase == "did" then
         -- Called when the scene is now on screen
         -- Add the back button
-         navBar.addBackButton()
+         navBar.addRightBarButton( widget.newButton({
+        	label="Cancel",
+        	width=50,
+        	height=50,
+        	onRelease=function() 
+        		composer.gotoScene("ViewTasks", {effect="slideRight", params=event.params }) 
+        	end 
+        }) )
          -- Add Save button
          navBar.addLeftBarButton( widget.newButton({
         	label="Save",

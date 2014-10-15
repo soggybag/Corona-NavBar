@@ -79,6 +79,7 @@ function scene:show( event )
 
     if phase == "will" then
         -- Called when the scene is still off screen and is about to move on screen
+		
 		display_info( event.params.index )       
        
     elseif phase == "did" then
