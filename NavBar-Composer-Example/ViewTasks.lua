@@ -6,11 +6,11 @@
 
 -- local sceneName = ...
 
-local composer = require( "composer" )
-local widget = require( "widget" )
-local data = require( "data" )
-local navBar = require( "NavBar" )
-local Text = require("Text")
+local composer 	= require( "composer" )
+local widget 	= require( "widget" )
+local data 		= require( "data" )
+local navBar 	= require( "NavBar" )
+local Text 		= require("Text")
 
 
 -- Load scene with same root filename as this file
@@ -126,9 +126,9 @@ function scene:show( event )
         -- Set the navbar title
         navBar.setTitle( "Assignments" )
         -- Clear any buttons on the navbar
-        navBar.clearRightBarButton()
+        navBar.clearLeftBarButton()
         -- Add a button to the left of the navbar
-        navBar.addLeftBarButton( widget.newButton({
+        navBar.addRightBarButton( widget.newButton({
         	label="Add",
         	width=50,
         	height=50,

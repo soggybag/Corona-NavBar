@@ -89,7 +89,7 @@ function scene:show( event )
         -- e.g. start timers, begin animation, play audio, etc
         
         navBar.addBackButton()
-        navBar.addLeftBarButton( widget.newButton({
+        navBar.addRightBarButton( widget.newButton({
         	label="Edit",
         	width=50,
         	height=50,

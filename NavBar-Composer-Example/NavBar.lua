@@ -2,9 +2,8 @@ local M = display.newGroup()
 ----------------
 
 
-local widget = require("widget")
-local composer = require("composer")
-
+local widget = require("widget")		-- Import widget for use with buttons
+local composer = require("composer")	-- Import composer for the back button
 
 ------------------------------------
 -- Make some variables
@@ -26,10 +25,6 @@ local backColor = {r=222/255, g=222/255, b=222/255, a=1}
 
 local rightBarButton
 local leftBarButton
-
-
-
-
 
 
 
@@ -102,93 +97,82 @@ back = make_bar()
 
 
 ---------------------------------
+-- get_view()
+-- returns the group object
 local function get_view()
 	return group
 end 
 M.get_view = get_view
 ---------------------------------
+-- setTitle( titleString ) 
+-- Sets the title displayed in the center of the nav bar. 
 local function setTitle( str )
 	make_title( str ) 
 end 
 M.setTitle = setTitle
 ---------------------------------
-
+-- clearRightBarButton()
+-- Clears the right bar button
 local function clearRightBarButton()
 	if rightBarButton then 
-		transition.to( rightBarButton, {x=-50, time=200, onComplete=function(target)
+		transition.to( rightBarButton, {x=display.contentWidth+50, time=200, onComplete=function(target)
 			display.remove(target)
 		end} )
 		rightBarButton = nil
 	end 
 end 
 M.clearRightBarButton = clearRightBarButton
-
 ---------------------------
-
+-- clearLeftBarButton()
+-- Clear the left bar button
 local function clearLeftBarButton()
 	if leftBarButton then 
-		transition.to( leftBarButton, {x=display.contentWidth+50, time=200, onComplete=function(target)
+		transition.to( leftBarButton, {x=-50, time=200, onComplete=function(target)
 			display.remove(target)
 		end} )
 		leftBarButton = nil
 	end 
 end 
 M.clearLeftBarButton = clearLeftBarButton
-
 ---------------------------
-
+-- clearBarButtons()
+-- Clear both the left and right bar buttons. 
 local function clearBarButtons()
 	clearRightBarButton()
 	clearLeftBarButton()
 end 
 M.clearBarButtons = clearBarButtons
-
 ---------------------------
-
+-- addRightBarButton( buttonObject )
+-- Adds a button object to the right of the bar. The buttonObject can be a widget button
+-- or a display object of any type. If there is a button on the right, that button is 
+-- removed when a new button is added. 
 local function addRightBarButton( button )
-	if rightBarButton then 
-		transition.to( rightBarButton, {x=-50, time=200, onComplete=function(target)
-			display.remove(target)
-		end} )
-		rightBarButton = nil
-	end
-	
+	clearRightBarButton()
 	rightBarButton = button
-	
 	group:insert(button)
-	
-	button.y = bar_height / 2
-	button.x = button.width / -2
-	
-	transition.to( button, {x=button.width/2+10, time=200} )
-end 
-M.addRightBarButton = addRightBarButton
-
------------------------------
-
-local function addLeftBarButton( button )
-	if leftBarButton then 
-		transition.to( leftBarButton, {x=-50, time=200, onComplete=function(target)
-			display.remove(target)
-		end} )
-		leftBarButton = nil
-	end
-	
-	leftBarButton = button
-	
-	group:insert(button)
-	
 	button.y = bar_height / 2
 	button.x = display.contentWidth + button.width / 2
-	
 	transition.to( button, {x=display.contentWidth - button.width/2-10, time=200} )
 end 
-M.addLeftBarButton = addLeftBarButton
-
+M.addRightBarButton = addRightBarButton
 -----------------------------
-
+-- addLeftBarButton( buttonObject )
+-- Adds a button to the left of the bar. 
+local function addLeftBarButton( button )
+	clearLeftBarButton()
+	leftBarButton = button
+	group:insert(button)
+	button.y = bar_height / 2
+	button.x = button.width / -2
+	transition.to( button, {x=button.width/2+10, time=200} )
+end 
+M.addLeftBarButton = addLeftBarButton
+-----------------------------
+-- addBackButton()	
+-- Adds a button, labeled: Back, to the right 
 local function addBackButton()	
-	addRightBarButton( widget.newButton( {
+	addLeftBarButton( widget.newButton( {
 		width=50,
 		height=bar_height,
 		label="Back",
@@ -196,7 +180,12 @@ local function addBackButton()
 	} ) )
 end 
 M.addBackButton = addBackButton
-
+--------------------------------
+-- 
+local function setBarColor(r, g, b, a)
+	back:setFillColor( r or 1, g or 1, b or 1, a or 1)
+end 
+M.setBarColor = setBarColor
 
 
 
